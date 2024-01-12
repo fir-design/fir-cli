@@ -1,0 +1,19 @@
+$class: [SLUGIFY];
+$component: .$(class);
+$element: [is=fir-$(class)];
+
+$(element) {
+    container-type: inline-size;
+    container-name: [SLUGIFY];
+}
+
+
+$(component) {
+
+}
+
+@container [SLUGIFY] (min-width: 1024px) {
+    $(component) {
+
+    }
+}
