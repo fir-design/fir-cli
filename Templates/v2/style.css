@@ -5,11 +5,17 @@ $element: [is=fir-$(class)];
 $(element) {
     container-type: inline-size;
     container-name: [SLUGIFY];
+
+    --bg-color: var(--cs-secondary);
+    --text-color: var(--color-light);
 }
 
 
 $(component) {
-
+    text-align: center;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: var(--pad-lg);
 }
 
 @container [SLUGIFY] (min-width: 1024px) {
