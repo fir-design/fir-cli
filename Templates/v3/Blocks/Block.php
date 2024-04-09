@@ -29,6 +29,37 @@ class [CAMEL] extends Block
     public $description = '[DESC]';
 
     /**
+     * The block container settings.
+     *
+     * @var string
+     */
+    public $containerSettings = '[CNTRSETTINGS]';
+
+    /**
+     * The block wrapper settings.
+     *
+     * @var string
+     */
+    public $wrapperSettings = '[WRPSETTINGS]';
+
+
+    /**
+     * The block copy settings.
+     *
+     * @var string
+     */
+    public $copySettings = '[COPYSETTINGS]';
+
+
+    /**
+     * The full block settings.
+     *
+     * @var string
+     */
+    public $blockSettings = $containerSettings . ' ' . $wrapperSettings . ' ' . $copySettings;
+
+
+    /**
      * The block view.
      *
      * @var string
@@ -103,41 +134,8 @@ class [CAMEL] extends Block
      *
      * @var array
      */
-    public $supports = [
-        'align' => true,
-        'align_text' => true,
-        'align_content' => true,
-        'full_height' => false,
-        'anchor' => false,
-        'mode' => false,
-        'multiple' => true,
-        'jsx' => true,
-        'color' => [
-            'text' => true,
-            'background' => true,
-            'link' => true,
-            'border' => true,
-        ],
-        'background'=> [
-            'backgroundImage' => true,
-            'backgroundSize' => true,
-        ],
-        'reusable'=> true,
-        'anchor' => true,
-        'customClassName' => true,
-        'typography' => true,
-        'position'=> ['sticky', 'fixed', 'absolute'],
-        'dimensions' => [
-            'aspectRatio' => true,
-            'minHeight' => true,
-            'spacing' => true,
-            'border' => true,
-        ],
-        'spacing' =>  [
-            'blockGap' =>  true,  // Enables block spacing UI control for blocks that also use `layout`.
-        ]
+    public $supports =  return Blocks::getBlockSupports($blockSettings);
     
-    ];
 
     /**
      * The block styles.
@@ -207,6 +205,28 @@ class [CAMEL] extends Block
         ];
     }
 
+    public function getPineconesettings()
+    {
+        $classes = $block['classes'];
+        $container = Blocks::getBlockSettings($block, $containerSettings,  $classes);
+        $wrapper = Blocks::getBlockSettings($block, $wrapperSettings,  $classes);
+        $copy = locks::getBlockSettings($block, $copySettings,  $classes;
+        return [
+            'container'=> $container,
+            'wrapper'=> $wrapper,
+            'copy'=> $copy
+        ]
+    }
+    public function getWrapper()
+    {
+
+        return Blocks::getBlockSettings($block, $wrapperSettings,  $classes = null);
+    }
+    public function getCopy()
+    {
+
+        return Blocks::getBlockSettings($block, $copySettings,  $classes = null);
+    }
     /**
      * The block field group.
      *
@@ -235,8 +255,6 @@ class [CAMEL] extends Block
             ])
             ->addFields(GlobalFields::getFields('flipHorizontal'))
             ->addFields(GlobalFields::getFields('hideComponent'))
-            ->addFields(GlobalFields::getFields('componentID'))
-
             ->endGroup();
 
         return $[CAMEL]->build();

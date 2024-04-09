@@ -11,7 +11,7 @@ import { dirname, basename } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-let __version = 'v1'
+let __version = 'v3'
 
 
 async function _importPinecone(repo, path, camel, removeGit = true) {
@@ -96,7 +96,7 @@ function _awaitPinecone() {
     });
 }
 
-function _pineconeQuestions(version = 'v1', defaults = {name: ''}, config = {desc: ''}) {
+function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {desc: ''}) {
     __version = version
     console.log(`Version:: ${__version}`)  
     return new Promise((resolve, reject) => {
@@ -167,6 +167,40 @@ function _pineconeQuestions(version = 'v1', defaults = {name: ''}, config = {des
                     return input != ''
                 }
             },
+            {
+                message: 'What container settings do you want?',
+                type: "input",
+                name: "cntrsettings",
+                default: () => {
+                    return (config.cntrsettings) ? config.cntrsettings : 'N/A' 
+                },
+                validate: input => {
+                    return input != ''
+                }
+            },
+            {
+                message: 'What wrapper settings do you want?',
+                type: "input",
+                name: "cntrsettings",
+                default: () => {
+                    return (config.wrpsettings) ? config.wrpsettings : 'N/A' 
+                },
+                validate: input => {
+                    return input != ''
+                }
+            },
+            {
+                message: 'What copy settings do you want?',
+                type: "input",
+                name: "wrpsettings",
+                default: () => {
+                    return (config.copysettings) ? config.copysettings : 'N/A' 
+                },
+                validate: input => {
+                    return input != ''
+                }
+            },
+
         ]).then(answers => {
              resolve(answers)
         })
@@ -194,6 +228,9 @@ function _processImportedPinecone(answers, config, path) {
                             new RegExp(config.name, 'g'),
                             new RegExp(config.desc, 'g'),
                             new RegExp(config.dob, 'g')
+                            new RegExp(config.cntrsettings, 'g')
+                            new RegExp(config.wrpsettings, 'g')
+                            new RegExp(config.copysettings, 'g')
                         ]
         
                         await _updateFile(file, options, answers)
@@ -225,7 +262,7 @@ function _processPinecone(answers, path){
                 await asyncForEach(files, async (file) => {
                     
                     if(!fs.lstatSync(file).isDirectory()){
-                        const options = [/\[SLUGIFY\]/g, /\[CAMEL\]/g, /\[NAME\]/g, /\[DESC\]/g,  /\[DOB\]/g]
+                        const options = [/\[SLUGIFY\]/g, /\[CAMEL\]/g, /\[NAME\]/g, /\[DESC\]/g,  /\[DOB\]/g,  /\[CNTRSETTINGS\]/g,  /\[WRPSETTINGS\]/g,  /\[COPYSETTINGS\]/g]
                         await updateFile(file, options, answers)
                     }
                     
@@ -260,7 +297,7 @@ async function _updateFile(file, targets, answers) {
     const options = {   
         files: file,
         from: targets,
-        to: [answers.nameSlugified, answers.nameCamelCase, answers.name, answers.desc, answers.dob],
+        to: [answers.nameSlugified, answers.nameCamelCase, answers.name, answers.desc, answers.dob, answers.cntrsettings, answers.wrpsettings, answers.copysettings],
     }
     try {
         const changes = await replaceInFile(options)
