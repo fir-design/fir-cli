@@ -28,10 +28,10 @@
         @endif
         <section fir-container="[SLUGIFY]" id="{{ $options['pinecone_id'] ?? '' }}">
 
-            <fir-[SLUGIFY] class="[SLUGIFY]"  class="{{ $block->classes }}"  is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone>
+            <fir-[SLUGIFY] class="{{ $container }}"  is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone>
                 
-                <div class="wrapper [SLUGIFY]__wrap {{ $flipLayout }}" style="{{ $padding }} {{ $pull }}">
-                    <div class="[SLUGIFY]__copy">
+                <div class="{{ $wrapper }}">
+                    <div class="{{ $copy }}">
                         <h1 class="[SLUGIFY]__title"> {{ $title }}</h1>
                         <small>Pinecone: [NAME] / [CAMEL]</small>
                         <p class="[SLUGIFY]__text"> {{ $text }}</p>

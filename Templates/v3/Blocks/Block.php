@@ -207,25 +207,17 @@ class [CAMEL] extends Block
 
     public function getPineconesettings()
     {
+        //defaults
         $classes = $block['classes'];
         $container = Blocks::getBlockSettings($block, $containerSettings,  $classes);
-        $wrapper = Blocks::getBlockSettings($block, $wrapperSettings,  $classes);
-        $copy = locks::getBlockSettings($block, $copySettings,  $classes;
+        $wrapper = Blocks::getBlockSettings($block, $wrapperSettings,  'wrapper');
+        $copy = locks::getBlockSettings($block, $copySettings,  'copy');
+
         return [
             'container'=> $container,
             'wrapper'=> $wrapper,
             'copy'=> $copy
         ]
-    }
-    public function getWrapper()
-    {
-
-        return Blocks::getBlockSettings($block, $wrapperSettings,  $classes = null);
-    }
-    public function getCopy()
-    {
-
-        return Blocks::getBlockSettings($block, $copySettings,  $classes = null);
     }
     /**
      * The block field group.
@@ -234,30 +226,7 @@ class [CAMEL] extends Block
      */
     public function fields()
     {
-        $[CAMEL] = new FieldsBuilder('[CAMEL]');
-
-        $[CAMEL]
-            ->addText('title')
-            ->addTextArea('text')
-            ->addAccordion('negativeMargin', [
-                'label' => 'Negative Margin',
-            ])
-            ->addFields(GlobalFields::getFields('pushPull'))
-            ->addAccordion('margin-end')->endpoint()
-            ->addAccordion('padding', [
-                'label' => 'Padding',
-            ])
-            ->addFields(GlobalFields::getFields('padding'))
-            ->addAccordion('padding-end')->endpoint()
-            ->addGroup('options', [
-                'label' => 'Options',
-                'layout' => 'block'
-            ])
-            ->addFields(GlobalFields::getFields('flipHorizontal'))
-            ->addFields(GlobalFields::getFields('hideComponent'))
-            ->endGroup();
-
-        return $[CAMEL]->build();
+        return Blocks::getBlockFields($blockSettings);
     }
 
     /**
