@@ -181,7 +181,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
             {
                 message: 'What wrapper settings do you want?',
                 type: "input",
-                name: "cntrsettings",
+                name: "wrpsettings",
                 default: () => {
                     return (config.wrpsettings) ? config.wrpsettings : 'N/A' 
                 },
@@ -192,7 +192,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
             {
                 message: 'What copy settings do you want?',
                 type: "input",
-                name: "wrpsettings",
+                name: "copysettings",
                 default: () => {
                     return (config.copysettings) ? config.copysettings : 'N/A' 
                 },
@@ -227,9 +227,9 @@ function _processImportedPinecone(answers, config, path) {
                             new RegExp(config.camel, 'g'),
                             new RegExp(config.name, 'g'),
                             new RegExp(config.desc, 'g'),
-                            new RegExp(config.dob, 'g')
-                            new RegExp(config.cntrsettings, 'g')
-                            new RegExp(config.wrpsettings, 'g')
+                            new RegExp(config.dob, 'g'),
+                            new RegExp(config.cntrsettings, 'g'),
+                            new RegExp(config.wrpsettings, 'g'),
                             new RegExp(config.copysettings, 'g')
                         ]
         

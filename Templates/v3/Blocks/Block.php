@@ -56,7 +56,7 @@ class [CAMEL] extends Block
      *
      * @var string
      */
-    public $blockSettings = $containerSettings . ' ' . $wrapperSettings . ' ' . $copySettings;
+    public $blockSettings = '[CNTRSETTINGS] [WRPSETTINGS] [COPYSETTINGS]';
 
 
     /**
@@ -134,7 +134,7 @@ class [CAMEL] extends Block
      *
      * @var array
      */
-    public $supports =  return Blocks::getBlockSupports($blockSettings);
+    public $supports =  Blocks::getBlockSupports($block, $blockSettings);
     
 
     /**
@@ -205,7 +205,7 @@ class [CAMEL] extends Block
         ];
     }
 
-    public function getPineconesettings()
+    public function getPineconeSettings()
     {
         //defaults
         $classes = $block['classes'];
@@ -226,7 +226,7 @@ class [CAMEL] extends Block
      */
     public function fields()
     {
-        return Blocks::getBlockFields($blockSettings);
+         return Blocks::getBlockFields($block, $blockSettings);
     }
 
     /**
