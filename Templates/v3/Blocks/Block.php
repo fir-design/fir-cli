@@ -33,31 +33,21 @@ class [CAMEL] extends Block
      *
      * @var string
      */
-    public $containerSettings = '[CNTRSETTINGS]';
+    public $containerSettings = '[CNTRSETTINGS] backgroundColor background margin negativeMargin hideComponent pushPull flipHorizontal componentID';
 
     /**
      * The block wrapper settings.
      *
      * @var string
      */
-    public $wrapperSettings = '[WRPSETTINGS]';
-
+    public $wrapperSettings = '[WRPSETTINGS] align_content padding';
 
     /**
      * The block copy settings.
      *
      * @var string
      */
-    public $copySettings = '[COPYSETTINGS]';
-
-
-    /**
-     * The full block settings.
-     *
-     * @var string
-     */
-    public $blockSettings = '[CNTRSETTINGS] [WRPSETTINGS] [COPYSETTINGS]';
-
+    public $copySettings = '[COPYSETTINGS] textColor align align_text';
 
     /**
      * The block view.
@@ -134,8 +124,41 @@ class [CAMEL] extends Block
      *
      * @var array
      */
-    public $supports =  Blocks::getBlockSupports($block, $blockSettings);
-    
+    //working on getting this to work public $supports =  Blocks::getBlockSupports($block, $blockSettings);
+    public $supports = [
+        'align' => true,
+        'align_text' => false,
+        'align_content' => false,
+        'full_height' => false,
+        'anchor' => true,
+        'mode' => false,
+        'multiple' => true,
+        'jsx' => true,
+        'color' => [
+            'text' => true,
+            'background' => true,
+            'link' => true,
+            'border' => true,
+        ],
+        'background' => [
+            'backgroundImage' => true,
+            'backgroundSize' => true,
+        ],
+        'html' => true,
+        'reusable' => true,
+        'customClassName' => true,
+        'typography' => true,
+        'position' => false,
+        'dimensions' => [
+            'aspectRatio' => true,
+            'minHeight' => true,
+            'spacing' => true,
+            'border' => true,
+        ],
+        'spacing' => [
+            'blockGap' => true,
+        ]
+    ];
 
     /**
      * The block styles.
@@ -192,32 +215,25 @@ class [CAMEL] extends Block
         $pullValue = (get_field('pull')) ?: $this->example['pull'];
         $pull = "transform: translateY(calc(-1 * var(--spacing-preset-{$pullValue})));";
 
+        //defaults
+        $classes = $this->classes;
+        $container = Blocks::getBlockSettings('[CAMEL]', $this->containerSettings,  $classes);
+        $wrapper = Blocks::getBlockSettings('[CAMEL]', $this->wrapperSettings,  'wrapper');
+        $copy = Blocks::getBlockSettings('[CAMEL]', $this->copySettings,  'copy');
         return [
             'style' =>  $style,
             'title' => get_field('title') ?: $this->example['title'],
             'text' => get_field('text') ?: $this->example['text'],     
             'padding' => $padding,
             'pull' => $pull,
-            'flipLayout' => ($options['flip_horizontal']) ? '[SLUGIFY]__wrap--flip' : '',
+            'flipLayout' => ($options['flip_horizontal']) ? '[CAMEL]__wrap--flip' : '',
             'hide' => $options['hide_component'],
             'options' => $options,
-            'preview' => $this->preview
-        ];
-    }
-
-    public function getPineconeSettings()
-    {
-        //defaults
-        $classes = $block['classes'];
-        $container = Blocks::getBlockSettings($block, $containerSettings,  $classes);
-        $wrapper = Blocks::getBlockSettings($block, $wrapperSettings,  'wrapper');
-        $copy = locks::getBlockSettings($block, $copySettings,  'copy');
-
-        return [
             'container'=> $container,
             'wrapper'=> $wrapper,
-            'copy'=> $copy
-        ]
+            'copy'=> $copy,
+            'preview' => $this->preview
+        ];
     }
     /**
      * The block field group.
@@ -228,7 +244,20 @@ class [CAMEL] extends Block
     {
          return Blocks::getBlockFields($block, $blockSettings);
     }
+    public function fields()
+    {        
+        $[CAMEL]= new FieldsBuilder('[CAMEL]');
+        $[CAMEL]
+            ->addText('title')
+            ->addTextArea('text');
+            $fields = Blocks::getBlockFields('[CAMEL]', array(
+                $this->containerSettings,
+                $this->wrapperSettings,
+                $this->copySettings
+            ), $[CAMEL]);
 
+        return $fields->build();
+    }
     /**
      * Assets to be enqueued when rendering the block.
      *
