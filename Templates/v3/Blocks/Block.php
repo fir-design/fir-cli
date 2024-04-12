@@ -241,10 +241,6 @@ class [CAMEL] extends Block
      * @return array
      */
     public function fields()
-    {
-         return Blocks::getBlockFields($block, $blockSettings);
-    }
-    public function fields()
     {        
         $[CAMEL]= new FieldsBuilder('[CAMEL]');
         $[CAMEL]
