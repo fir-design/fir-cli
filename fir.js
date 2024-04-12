@@ -12,6 +12,7 @@ import Config from './commands/ConfigCommand.js';
 import Update from './commands/UpdateCommand.js';
 import Import from './commands/ImportCommand.js';
 import Test from './commands/TestCommand.js';
+import Tailwind from './commands/TailwindCommand.js';
 
 import {displayFirAscii} from './ascii/art.js';
 
@@ -23,7 +24,8 @@ const commands = [
    new Config(),
    new Update(),
    new Import(),
-   new Test()
+   new Test(),
+   new Tailwind()
 ]
 
 
