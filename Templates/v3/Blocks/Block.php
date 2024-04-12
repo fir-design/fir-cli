@@ -3,7 +3,7 @@
 namespace Fir\Pinecones\[CAMEL]\Blocks;
 
 use Log1x\AcfComposer\Block;
-use StoutLogic\AcfBuilder\FieldsBuilder;
+use Log1x\AcfComposer\Builder;
 use Fir\Lib\Utils\GlobalFields as GlobalFields;
 use Fir\Lib\Utils\Helpers;
 use Fir\Lib\Utils\Blocks;
@@ -97,6 +97,13 @@ class [CAMEL] extends Block
      * @var string
      */
     public $mode = 'preview';
+
+    /**
+     * The ancestor block type allow list.
+     *
+     * @var array
+     */
+    public $ancestor = [];
 
     /**
      * The default block alignment.
@@ -199,13 +206,23 @@ class [CAMEL] extends Block
         ]
     ];
 
+    /**
+     * The block template.
+     *
+     * @var array
+     */
+    public $template = [
+        // 'core/heading' => ['placeholder' => 'Hello World'],
+        // 'core/paragraph' => ['placeholder' => 'Welcome to the Hello block.'],
+    ];
+
 
     /**
      * Data to be passed to the block before rendering.
      *
      * @return array
      */
-    public function with()
+    public function with(): array
     {
         $options = get_field('options') ?: $this->example['options'];
 
@@ -220,6 +237,7 @@ class [CAMEL] extends Block
         $container = Blocks::getBlockSettings('[CAMEL]', $this->containerSettings,  $classes);
         $wrapper = Blocks::getBlockSettings('[CAMEL]', $this->wrapperSettings,  'wrapper');
         $copy = Blocks::getBlockSettings('[CAMEL]', $this->copySettings,  'copy');
+
         return [
             'style' =>  $style,
             'title' => get_field('title') ?: $this->example['title'],
@@ -235,18 +253,11 @@ class [CAMEL] extends Block
             'preview' => $this->preview
         ];
     }
-    /**
-     * The block field group.
-     *
-     * @return array
-     */
-    public function fields()
-    {
-         return Blocks::getBlockFields($block, $blockSettings);
-    }
+
+
     public function fields()
     {        
-        $[CAMEL]= new FieldsBuilder('[CAMEL]');
+        $[CAMEL]= Builder::make('[CAMEL]');
         $[CAMEL]
             ->addText('title')
             ->addTextArea('text');
@@ -258,12 +269,11 @@ class [CAMEL] extends Block
 
         return $fields->build();
     }
+
     /**
-     * Assets to be enqueued when rendering the block.
-     *
-     * @return void
+     * Assets enqueued when rendering the block.
      */
-    public function enqueue()
+    public function assets(array $block): void
     {
         // if prod and fontend
         if(!Helpers::isDevelopment() && !is_admin()){
