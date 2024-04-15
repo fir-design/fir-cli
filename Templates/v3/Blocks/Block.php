@@ -253,8 +253,11 @@ class [CAMEL] extends Block
             'preview' => $this->preview
         ];
     }
-
-
+    /**
+     * The block field group.
+     *
+     * @return array
+     */
     public function fields()
     {        
         $[CAMEL]= Builder::make('[CAMEL]');
