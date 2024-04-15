@@ -13,10 +13,12 @@ let __version = 'v1'
 async function getSafelist (lists) {
     let fullSafelist = [];
     for (const list of lists) {
+        console.log('Parsing list: ', list)
         const { safelist } = await import(list);
         fullSafelist = [...fullSafelist, ...safelist]
     }
     console.log('Finished safelists import')
+    conbsole.log('Full list: ', fullSafelist)
     return fullSafelist
 }
 
