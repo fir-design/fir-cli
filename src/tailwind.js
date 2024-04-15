@@ -18,7 +18,7 @@ async function getSafelist (lists) {
         fullSafelist = [...fullSafelist, ...safelist]
     }
     console.log('Finished safelists import')
-    conbsole.log('Full list: ', fullSafelist)
+    console.log('Full list: ', fullSafelist)
     return fullSafelist
 }
 
