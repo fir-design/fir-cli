@@ -172,7 +172,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "cntrsettings",
                 default: () => {
-                    return (config.cntrsettings) ? config.cntrsettings : 'N/A' 
+                    return (config.cntrsettings) ? config.cntrsettings : '' 
                 },
                 validate: input => {
                     return input != ''
@@ -183,7 +183,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "wrpsettings",
                 default: () => {
-                    return (config.wrpsettings) ? config.wrpsettings : 'N/A' 
+                    return (config.wrpsettings) ? config.wrpsettings : '' 
                 },
                 validate: input => {
                     return input != ''
@@ -194,7 +194,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "copysettings",
                 default: () => {
-                    return (config.copysettings) ? config.copysettings : 'N/A' 
+                    return (config.copysettings) ? config.copysettings : '' 
                 },
                 validate: input => {
                     return input != ''

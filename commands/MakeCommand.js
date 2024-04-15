@@ -7,7 +7,7 @@ export default class Make extends Command {
     constructor() {
         super(
             "make",
-            "Makes a ew Pinecone block",
+            "Makes a new Pinecone block",
             [],
             []
         )
