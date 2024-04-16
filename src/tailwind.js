@@ -29,7 +29,16 @@ async function _updateTailwindConfig(version) {
 
     const safelists = await getSafelist(twConfigs)
 
-    fs.writeFileSync(`${process.cwd()}/tailwind.safelist.js`, `export const safelist =${JSON.stringify(safelists, null, 2).replace(/"/g, '')}`, 'utf8');
+    let safelist = JSON.stringify(safelists, null, 2)
+    const patternString = /"pattern"(\s*):(\s*)"(.*)"/gm
+    let match;
+    while ((match = patternString.exec(safelist)) !== null) {
+        console.log('Match:', match[0].replace(/"/g, ''))
+        safelist = safelist.replace(match[0],match[0].replace(/"/g, ''))
+    }
+
+
+    fs.writeFileSync(`${process.cwd()}/tailwind.safelist.js`, `export const safelist =${safelist}`, 'utf8');
 
     return new Promise((resolve, reject) => {
         resolve('Hooray!');
