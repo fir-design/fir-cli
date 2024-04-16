@@ -29,13 +29,31 @@ async function _updateTailwindConfig(version) {
 
     const safelists = await getSafelist(twConfigs)
 
+    // make an array of all the regex patterns
+    let regex = []
+    let index = 0
+    safelists.forEach((item, i) => {
+        console.log(item)
+        if (item.pattern) {
+            regex.push((new RegExp(item.pattern)).source)
+            safelists[i].pattern = `R${index}`
+            index ++
+        }
+    })
+    console.log(regex)
+
     let safelist = JSON.stringify(safelists, null, 2)
+
     const patternString = /"pattern"(\s*):(\s*)"(.*)"/gm
     let match;
     while ((match = patternString.exec(safelist)) !== null) {
         console.log('Match:', match[0].replace(/"/g, ''))
         safelist = safelist.replace(match[0],match[0].replace(/"/g, ''))
     }
+
+    regex.forEach((item, i) => {
+        safelist = safelist.replace(`R${i}`, RegExp(item))
+    })
 
 
     fs.writeFileSync(`${process.cwd()}/tailwind.safelist.js`, `export const safelist =${safelist}`, 'utf8');
