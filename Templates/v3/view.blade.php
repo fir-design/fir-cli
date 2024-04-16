@@ -26,7 +26,7 @@
         @if(!Fir\Lib\Utils\Helpers::isProduction())
         <!-- Description : [DESC] -->
         @endif
-        <section fir-container="[SLUGIFY]" id="{{ $options['pinecone_id'] ?? '' }}">
+        <section fir-container="[SLUGIFY]" id="{{ $options['pinecone_id'] ?? '' }}" class="@container/[SLUGIFY]">
 
             <fir-[SLUGIFY] class="{{ $container }}"  is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone>
                 
