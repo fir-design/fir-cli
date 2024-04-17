@@ -165,7 +165,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 },
                 validate: input => {
                     return input != ''
-                }
+                },
             },
             {
                 message: 'What container settings do you want?',
@@ -176,6 +176,9 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 },
                 validate: input => {
                     return input != ''
+                },
+                when: () => {
+                    return (version == 'v3')
                 }
             },
             {
@@ -187,6 +190,9 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 },
                 validate: input => {
                     return input != ''
+                },
+                when: () => {
+                    return (version == 'v3')
                 }
             },
             {
@@ -198,6 +204,9 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 },
                 validate: input => {
                     return input != ''
+                },
+                when: () => {
+                    return (version == 'v3')
                 }
             },
 
