@@ -4,7 +4,6 @@ namespace Fir\Pinecones\[CAMEL]\Blocks;
 
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Fir\Lib\Utils\GlobalFields as GlobalFields;
 use Fir\Lib\Utils\Helpers;
 use Fir\Lib\Utils\Blocks;
 use Fir\Lib\Utils\Images;
@@ -33,21 +32,21 @@ class [CAMEL] extends Block
      *
      * @var string
      */
-    public $containerSettings = '[CNTRSETTINGS] backgroundColor background margin negativeMargin hideComponent pushPull flipHorizontal componentID';
+    public $containerSettings = '[CNTRSETTINGS] hideComponent pushPull flipHorizontal componentID';
 
     /**
      * The block wrapper settings.
      *
      * @var string
      */
-    public $wrapperSettings = '[WRPSETTINGS] align_content padding';
+    public $wrapperSettings = '[WRPSETTINGS]';
 
     /**
      * The block copy settings.
      *
      * @var string
      */
-    public $copySettings = '[COPYSETTINGS] textColor align align_text';
+    public $copySettings = '[COPYSETTINGS]';
 
     /**
      * The block view.
@@ -68,7 +67,7 @@ class [CAMEL] extends Block
      *
      * @var string|array
      */
-    public $icon = 'editor-ul';
+    public $icon = '[DASHICON]';
 
     /**
      * The block keywords.

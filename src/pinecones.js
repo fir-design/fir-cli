@@ -172,7 +172,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "cntrsettings",
                 default: () => {
-                    return (config.cntrsettings) ? config.cntrsettings : '' 
+                    return (config.cntrsettings) ? config.cntrsettings : 'backgroundColor background margin negativeMargin' 
                 },
                 validate: input => {
                     return input != ''
@@ -186,7 +186,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "wrpsettings",
                 default: () => {
-                    return (config.wrpsettings) ? config.wrpsettings : '' 
+                    return (config.wrpsettings) ? config.wrpsettings : 'align_content padding' 
                 },
                 validate: input => {
                     return input != ''
@@ -200,7 +200,21 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 type: "input",
                 name: "copysettings",
                 default: () => {
-                    return (config.copysettings) ? config.copysettings : '' 
+                    return (config.copysettings) ? config.copysettings : 'textColor align align_text' 
+                },
+                validate: input => {
+                    return input != ''
+                },
+                when: () => {
+                    return (version == 'v3')
+                }
+            },
+            {
+                message: 'Enter an icon for this pinecone',
+                type: "input",
+                name: "dashicon",
+                default: () => {
+                    return (config.dashicon) ? config.dashicon : 'editor-ul' 
                 },
                 validate: input => {
                     return input != ''
@@ -239,7 +253,8 @@ function _processImportedPinecone(answers, config, path) {
                             new RegExp(config.dob, 'g'),
                             new RegExp(config.cntrsettings, 'g'),
                             new RegExp(config.wrpsettings, 'g'),
-                            new RegExp(config.copysettings, 'g')
+                            new RegExp(config.copysettings, 'g'),
+                            new RegExp(config.dashicon, 'g')
                         ]
         
                         await _updateFile(file, options, answers)
@@ -271,7 +286,7 @@ function _processPinecone(answers, path){
                 await asyncForEach(files, async (file) => {
                     
                     if(!fs.lstatSync(file).isDirectory()){
-                        const options = [/\[SLUGIFY\]/g, /\[CAMEL\]/g, /\[NAME\]/g, /\[DESC\]/g,  /\[DOB\]/g,  /\[CNTRSETTINGS\]/g,  /\[WRPSETTINGS\]/g,  /\[COPYSETTINGS\]/g]
+                        const options = [/\[SLUGIFY\]/g, /\[CAMEL\]/g, /\[NAME\]/g, /\[DESC\]/g,  /\[DOB\]/g,  /\[CNTRSETTINGS\]/g,  /\[WRPSETTINGS\]/g,  /\[COPYSETTINGS\]/g,  /\[DASHICON\]/g]
                         await updateFile(file, options, answers)
                     }
                     
@@ -306,7 +321,7 @@ async function _updateFile(file, targets, answers) {
     const options = {   
         files: file,
         from: targets,
-        to: [answers.nameSlugified, answers.nameCamelCase, answers.name, answers.desc, answers.dob, answers.cntrsettings, answers.wrpsettings, answers.copysettings],
+        to: [answers.nameSlugified, answers.nameCamelCase, answers.name, answers.desc, answers.dob, answers.cntrsettings, answers.wrpsettings, answers.copysettings, answers.dashicon],
     }
     try {
         const changes = await replaceInFile(options)
