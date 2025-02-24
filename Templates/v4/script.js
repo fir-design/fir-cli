@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 class [CAMEL] extends HTMLElement {
 
     constructor (...args) {
@@ -20,9 +21,14 @@ class [CAMEL] extends HTMLElement {
     }
 
     resolveElements() {
-        this.ID = 'fir-[SLUGIFY]';
+        this.ID = this.uniqueID('[SLUGIFY]');
     }
 
+    uniqueID(prefix) {
+        let id = uuidv4();
+        return `${prefix}-${id}`
+    }
+    
     connectedCallback () {
         this.init[CAMEL]()
     }

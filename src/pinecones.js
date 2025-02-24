@@ -11,7 +11,7 @@ import { dirname, basename } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-let __version = 'v3'
+let __version = 'v4'
 
 
 async function _importPinecone(repo, path, camel, removeGit = true) {
@@ -96,7 +96,7 @@ function _awaitPinecone() {
     });
 }
 
-function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {desc: ''}) {
+function _pineconeQuestions(version = 'v4', defaults = {name: ''}, config = {desc: ''}) {
     __version = version
     console.log(`Version:: ${__version}`)  
     return new Promise((resolve, reject) => {
@@ -168,48 +168,6 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                 },
             },
             {
-                message: 'What container settings do you want?',
-                type: "input",
-                name: "cntrsettings",
-                default: () => {
-                    return (config.cntrsettings) ? config.cntrsettings : 'backgroundColor background margin negativeMargin' 
-                },
-                validate: input => {
-                    return input != ''
-                },
-                when: () => {
-                    return (version == 'v3')
-                }
-            },
-            {
-                message: 'What wrapper settings do you want?',
-                type: "input",
-                name: "wrpsettings",
-                default: () => {
-                    return (config.wrpsettings) ? config.wrpsettings : 'align_content padding' 
-                },
-                validate: input => {
-                    return input != ''
-                },
-                when: () => {
-                    return (version == 'v3')
-                }
-            },
-            {
-                message: 'What copy settings do you want?',
-                type: "input",
-                name: "copysettings",
-                default: () => {
-                    return (config.copysettings) ? config.copysettings : 'textColor align align_text' 
-                },
-                validate: input => {
-                    return input != ''
-                },
-                when: () => {
-                    return (version == 'v3')
-                }
-            },
-            {
                 message: 'Enter an icon for this pinecone',
                 type: "input",
                 name: "dashicon",
@@ -220,7 +178,7 @@ function _pineconeQuestions(version = 'v3', defaults = {name: ''}, config = {des
                     return input != ''
                 },
                 when: () => {
-                    return (version == 'v3')
+                    return (version == 'v4')
                 }
             },
 

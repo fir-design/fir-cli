@@ -5,8 +5,10 @@ namespace Fir\Pinecones\[CAMEL]\Blocks;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 use Fir\Lib\Utils\Helpers;
+use Fir\Lib\Utils\GlobalFields as GlobalFields;
 use Fir\Lib\Utils\Blocks;
 use Fir\Lib\Utils\Images;
+use Illuminate\Support\Facades\Vite;
 
 use function Roots\bundle;
 
@@ -26,27 +28,6 @@ class [CAMEL] extends Block
      * @var string
      */
     public $description = '[DESC]';
-
-    /**
-     * The block container settings.
-     *
-     * @var string
-     */
-    public $containerSettings = '[CNTRSETTINGS] hideComponent pushPull flipHorizontal componentID';
-
-    /**
-     * The block wrapper settings.
-     *
-     * @var string
-     */
-    public $wrapperSettings = '[WRPSETTINGS]';
-
-    /**
-     * The block copy settings.
-     *
-     * @var string
-     */
-    public $copySettings = '[COPYSETTINGS]';
 
     /**
      * The block view.
@@ -123,7 +104,21 @@ class [CAMEL] extends Block
      *
      * @var string
      */
-    public $align_content = '';
+    public $align_content = ''; 
+    
+    /**
+    * The Block Version
+    *
+    * @var string
+    */
+    public $blockVersion = 2;
+
+    /**
+    * The API Version
+    *
+    * @var string
+    */
+    public $apiVersion = 3;
 
     /**
      * The supported block features.
@@ -133,23 +128,14 @@ class [CAMEL] extends Block
     //working on getting this to work public $supports =  Blocks::getBlockSupports($block, $blockSettings);
     public $supports = [
         'align' => true,
-        'align_text' => false,
         'align_content' => false,
         'full_height' => false,
         'anchor' => true,
         'mode' => false,
         'multiple' => true,
         'jsx' => true,
-        'color' => [
-            'text' => true,
-            'background' => true,
-            'link' => true,
-            'border' => true,
-        ],
-        'background' => [
-            'backgroundImage' => true,
-            'backgroundSize' => true,
-        ],
+        'color' => false, // using acf pallete + ACF field instead
+        'background' => false, // using acf pallete + ACF field instead
         'html' => true,
         'reusable' => true,
         'customClassName' => true,
@@ -214,6 +200,13 @@ class [CAMEL] extends Block
         // 'core/heading' => ['placeholder' => 'Hello World'],
         // 'core/paragraph' => ['placeholder' => 'Welcome to the Hello block.'],
     ];
+    /**
+     * The Uses Context.
+     *
+     * @var array
+     */
+
+    public $uses_context = ['acf/fields', 'fir/block'];
 
 
     /**
@@ -224,31 +217,36 @@ class [CAMEL] extends Block
     public function with(): array
     {
         $options = get_field('options') ?: $this->example['options'];
-
+        // if $options['animations'] is not set, set it to an empty array
+        $options['animations'] = $options['animations'] ?? [
+            'animationsItem' => '',
+            'animationsComponent' => ''
+        ];
         $style = get_field('style') ?: $this->example['style'];
 
         $padding = Blocks::getBlockSpacing((get_field('padding')) ?: $this->example['padding'], 'padding');
-        $pullValue = (get_field('pull')) ?: $this->example['pull'];
+        $pullValue = ($options['pull']) ?: $this->example['pull'];
         $pull = "transform: translateY(calc(-1 * var(--spacing-preset-{$pullValue})));";
 
-        //defaults
+
         $classes = $this->classes;
-        $container = Blocks::getBlockSettings('[CAMEL]', $this->containerSettings,  $classes);
-        $wrapper = Blocks::getBlockSettings('[CAMEL]', $this->wrapperSettings,  'wrapper');
-        $copy = Blocks::getBlockSettings('[CAMEL]', $this->copySettings,  'copy');
+
 
         return [
             'style' =>  $style,
             'title' => get_field('title') ?: $this->example['title'],
             'text' => get_field('text') ?: $this->example['text'],     
-            'padding' => $padding,
             'pull' => $pull,
+            'class' => $class,
+            'textColor' => get_field('textColor'),
+            'backgroundColor' => get_field('backgroundColor'),
             'flipLayout' => ($options['flip_horizontal']) ? '[CAMEL]__wrap--flip' : '',
             'hide' => $options['hide_component'],
             'options' => $options,
-            'container'=> $container,
-            'wrapper'=> $wrapper,
-            'copy'=> $copy,
+            'padding' => $options['padding'] ?: '',
+            'margin' => $options['margin'] ?: '',
+            'hide' => $options['hide_component'],
+            'options' => $options,
             'preview' => $this->preview
         ];
     }
@@ -259,14 +257,21 @@ class [CAMEL] extends Block
         $[CAMEL]= Builder::make('[CAMEL]');
         $[CAMEL]
             ->addText('title')
-            ->addTextArea('text');
-            $fields = Blocks::getBlockFields('[CAMEL]', array(
-                $this->containerSettings,
-                $this->wrapperSettings,
-                $this->copySettings
-            ), $[CAMEL]);
+            ->addTextArea('text')
+            ->addFields(GlobalFields::getFields('color', 'textColor', 'Text Color'))
+            ->addFields(GlobalFields::getFields('color', 'backgroundColor', 'Background Color'))
 
-        return $fields->build();
+            ->addGroup('options', [
+                'label' => 'Options',
+                'layout' => 'block'
+            ])
+            ->addFields(GlobalFields::getFields('padding'))
+            ->addFields(GlobalFields::getFields('margin'))
+            ->addFields(GlobalFields::getFields('animation'))
+            ->addFields(GlobalFields::getFields('hideComponent'))
+            ->addFields(GlobalFields::getFields('pull'))
+            ->endGroup();
+        return $[CAMEL]->build();
     }
 
     /**

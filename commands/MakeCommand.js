@@ -30,7 +30,7 @@ export default class Make extends Command {
         // log initialisation
         console.log("Making a new Pinecone block");
         let config = JSON.parse(fs.readFileSync('./fir.config.json', 'utf8'));
-        let version = (config.version) ? config.version : 'v3'
+        let version = (config.version) ? config.version : 'v4'
         let newAnswers = await pineconeQuestions(version).then((result) => {
             return result
         })
