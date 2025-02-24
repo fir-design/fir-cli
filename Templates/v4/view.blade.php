@@ -39,7 +39,9 @@
             </div>
             <InnerBlocks />
         </div>
+
     </fir-[SLUGIFY]>
+    
 </section>
 
 <!-- End [NAME] -->
