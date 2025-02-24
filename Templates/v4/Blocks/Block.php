@@ -223,29 +223,18 @@ class [CAMEL] extends Block
             'animationsComponent' => ''
         ];
         $style = get_field('style') ?: $this->example['style'];
-
-        $padding = Blocks::getBlockSpacing((get_field('padding')) ?: $this->example['padding'], 'padding');
-        $pullValue = ($options['pull']) ?: $this->example['pull'];
-        $pull = "transform: translateY(calc(-1 * var(--spacing-preset-{$pullValue})));";
-
-
-        $classes = $this->classes;
-
-
         return [
+            //'class' => $class, * For future updates to incorporate block settings from the gutenberg Supports
             'style' =>  $style,
             'title' => get_field('title') ?: $this->example['title'],
             'text' => get_field('text') ?: $this->example['text'],     
-            'pull' => $pull,
-            'class' => $class,
-            'textColor' => get_field('textColor'),
-            'backgroundColor' => get_field('backgroundColor'),
-            'flipLayout' => ($options['flip_horizontal']) ? '[CAMEL]__wrap--flip' : '',
+            'textColor' => get_field('textColor') ?: '',
+            'backgroundColor' => get_field('backgroundColor') ?: '',
             'hide' => $options['hide_component'],
             'options' => $options,
             'padding' => $options['padding'] ?: '',
             'margin' => $options['margin'] ?: '',
-            'hide' => $options['hide_component'],
+            'hide' => $options['hide_component'] ?: '',
             'options' => $options,
             'preview' => $this->preview
         ];
@@ -265,11 +254,11 @@ class [CAMEL] extends Block
                 'label' => 'Options',
                 'layout' => 'block'
             ])
+
             ->addFields(GlobalFields::getFields('padding'))
             ->addFields(GlobalFields::getFields('margin'))
             ->addFields(GlobalFields::getFields('animation'))
             ->addFields(GlobalFields::getFields('hideComponent'))
-            ->addFields(GlobalFields::getFields('pull'))
             ->endGroup();
         return $[CAMEL]->build();
     }

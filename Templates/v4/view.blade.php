@@ -28,10 +28,10 @@
 @endif
 <section fir-container="[SLUGIFY]" id="{{ $block->block->anchor ?? Fir\Lib\Utils\Blocks::getUniqueId() }}" class="@container/[SLUGIFY]">
 
-    <fir-[SLUGIFY] class="block {{ backgroundColor }} transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
+    <fir-[SLUGIFY] class="block {{ $backgroundColor }} transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
         {!! $options['animations']['animationsComponent'] !!}>
 
-        <div class="{{ $class }} {{ $padding }} {{ $margin }} {{ textColor }}">
+        <div class="{{ $padding }} {{ $margin }} {{ $textColor }}">
             <h1 class="[SLUGIFY]__title"> {{ $title }}</h1>
             <small>Pinecone: [NAME] / [CAMEL]</small>
             <p class="[SLUGIFY]__text"> {{ $text }}</p>
