@@ -1,3 +1,5 @@
+// import { createApp } from 'vue'
+// import App from './App.vue'
 import { v4 as uuidv4 } from 'uuid';
 class [CAMEL] extends HTMLElement {
 
@@ -33,9 +35,19 @@ class [CAMEL] extends HTMLElement {
         this.init[CAMEL]()
     }
 
-    init[CAMEL] () {
-  
+    init[CAMEL] () {  
+        // console.log("Init: [CAMEL] ")
+        const { options } = this.props
+        // this.initVue()
+    }
 
+    initVue() {
+        let vueWrapper = this.querySelector('[data-vue]')
+        if(vueWrapper){
+            vueWrapper.id = this.ID    
+            const app = createApp(App)
+            app.mount(`#${this.ID}`)
+        }
     }
 
 }

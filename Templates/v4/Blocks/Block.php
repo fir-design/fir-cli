@@ -141,15 +141,6 @@ class [CAMEL] extends Block
         'customClassName' => true,
         'typography' => true,
         'position' => false,
-        'dimensions' => [
-            'aspectRatio' => true,
-            'minHeight' => true,
-            'spacing' => true,
-            'border' => true,
-        ],
-        'spacing' => [
-            'blockGap' => true,
-        ]
     ];
 
     /**
@@ -158,15 +149,7 @@ class [CAMEL] extends Block
      * @var array
      */
     public $styles = [
-        [
-            'name' => 'light',
-            'label' => 'Light',
-            'isDefault' => true,
-        ],
-        [
-            'name' => 'dark',
-            'label' => 'Dark'
-        ]
+
     ];
 
     /**
@@ -176,15 +159,6 @@ class [CAMEL] extends Block
      */
     public $example = [
         'style' => 'light',
-        'title' => 'Hello World',
-        'text' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid harum, aliquam repellat officiis dolorum, ducimus perspiciatis ipsa iste accusantium quaerat quis impedit rem.  Odio dolorem enim quam! Molestias, labore!',
-        'padding' => [
-            'top' => 0,
-            'right' => 0,
-            'bottom' => 0,
-            'left' => 0,
-        ],
-        'pull' => 0,
         'options' => [
             'flip_horizontal' => false,
             'hide_component' => false
@@ -197,9 +171,9 @@ class [CAMEL] extends Block
      * @var array
      */
     public $template = [
-        // 'core/heading' => ['placeholder' => 'Hello World'],
-        // 'core/paragraph' => ['placeholder' => 'Welcome to the Hello block.'],
+
     ];
+
     /**
      * The Uses Context.
      *
@@ -207,7 +181,6 @@ class [CAMEL] extends Block
      */
 
     public $uses_context = ['acf/fields', 'fir/block'];
-
 
     /**
      * Data to be passed to the block before rendering.
@@ -217,21 +190,16 @@ class [CAMEL] extends Block
     public function with(): array
     {
         $options = get_field('options') ?: $this->example['options'];
-        // if $options['animations'] is not set, set it to an empty array
+
         $options['animations'] = $options['animations'] ?? [
             'animationsItem' => '',
             'animationsComponent' => ''
         ];
-        $style = get_field('style') ?: $this->example['style'];
+
         return [
             //'class' => $class, * For future updates to incorporate block settings from the gutenberg Supports
-            'style' =>  $style,
-            'title' => get_field('title') ?: $this->example['title'],
-            'text' => get_field('text') ?: $this->example['text'],     
             'textColor' => get_field('textColor') ?: '',
             'backgroundColor' => get_field('backgroundColor') ?: '',
-            'hide' => $options['hide_component'],
-            'options' => $options,
             'padding' => $options['padding'] ?: '',
             'margin' => $options['margin'] ?: '',
             'hide' => $options['hide_component'] ?: '',
@@ -240,13 +208,10 @@ class [CAMEL] extends Block
         ];
     }
 
-
     public function fields()
     {        
         $[CAMEL]= Builder::make('[CAMEL]');
         $[CAMEL]
-            ->addText('title')
-            ->addTextArea('text')
             ->addFields(GlobalFields::getFields('color', 'textColor', 'Text Color'))
             ->addFields(GlobalFields::getFields('color', 'backgroundColor', 'Background Color'))
 
@@ -258,8 +223,10 @@ class [CAMEL] extends Block
             ->addFields(GlobalFields::getFields('padding'))
             ->addFields(GlobalFields::getFields('margin'))
             ->addFields(GlobalFields::getFields('animation'))
+            ->addFields(GlobalFields::getFields('customizations'))
             ->addFields(GlobalFields::getFields('hideComponent'))
             ->endGroup();
+
         return $[CAMEL]->build();
     }
 
@@ -268,9 +235,10 @@ class [CAMEL] extends Block
      */
     public function assets(array $block): void
     {
-        // if prod and fontend
-       // if(!Helpers::isDevelopment() && !is_admin()){
-        //    bundle('[CAMEL]', 'frontend')->enqueue();
-       // }
+        wp_enqueue_style('fir/[CAMEL]', Vite::asset('fir/Pinecones/[CAMEL]/style.css'),[], false);
+
+        if(!is_admin() && WP_ENV === 'production') {
+            wp_enqueue_script('fir/[CAMEL]', Vite::asset('fir/Pinecones/[CAMEL]/script.js'),[], false, []);
+        }
     }
 }

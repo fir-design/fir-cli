@@ -9,44 +9,29 @@
 </div>
 @endif
 
+@if($block->preview)
+    {{ Fir\Lib\Utils\Helpers::loadInlineAssets() }}
+@endif
+
 @if($block->example == $block->block->data)
-
-@if($block->style == 'light')
-<img src="https://res.cloudinary.com/fir-design/image/upload/w_1400,f_auto,q_auto/Pinecones/fir-hero3-light.png" alt="" style="width:100%;">
-@endif
-
-@if($block->style == 'dark')
-<img src="https://res.cloudinary.com/fir-design/image/upload/w_1400,f_auto,q_auto/Pinecones/fir-hero3-dark.png" alt="" style="width:100%;">
-@endif
-
+    <img src="https://res.cloudinary.com/fir-design/image/upload/w_1400,f_auto,q_auto/Pinecones/fir-hero3-light.png" alt="" style="width:100%;">
 @else
-
-@if(!$hide)
-<!-- Start [NAME] -->
-@if(!Fir\Lib\Utils\Helpers::isProduction())
-<!-- Description : [DESC] -->
-@endif
-<section fir-container="[SLUGIFY]" id="{{ $block->block->anchor ?? Fir\Lib\Utils\Blocks::getUniqueId() }}" class="@container/[SLUGIFY]">
-
-    <fir-[SLUGIFY] class="block {{ $backgroundColor }} transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
-        {!! $options['animations']['animationsComponent'] !!}>
-
-        <div class="{{ $padding }} {{ $margin }} {{ $textColor }}">
-            <h1 class="[SLUGIFY]__title"> {{ $title }}</h1>
-            <small>Pinecone: [NAME] / [CAMEL]</small>
-            <p class="[SLUGIFY]__text"> {{ $text }}</p>
-            <div data-vue>
-            </div>
-            <InnerBlocks />
-        </div>
-
-    </fir-[SLUGIFY]>
-    
-</section>
-
-<!-- End [NAME] -->
-
-@else
-<!-- Hidden [NAME] Component -->
-@endif
+    @if($hide)
+        @if(!Fir\Lib\Utils\Helpers::isProduction())
+        <!-- Description : [DESC] -->
+        @endif
+    @else
+        <!-- Start [NAME] -->
+        <section fir-container="[SLUGIFY]" id="{{ $block->block->anchor ?? Fir\Lib\Utils\Blocks::getUniqueId() }}" class="@container/[SLUGIFY]">
+            <fir-[SLUGIFY] class="block {{ $backgroundColor }} transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
+                {!! $options['animations']['animationsComponent'] !!}>
+                <div class="{{ $padding }} {{ $margin }} {{ $textColor }}">
+                    <small>Pinecone: [NAME] / [CAMEL]</small>
+                    <div data-vue>
+                    </div>
+                    <InnerBlocks />
+                </div>
+            </fir-[SLUGIFY]>
+        </section>
+    @endif
 @endif
