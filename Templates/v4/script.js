@@ -33,11 +33,19 @@ class [CAMEL] extends HTMLElement {
     
     connectedCallback () {
         this.init[CAMEL]()
+        this.setClasses()
+    }
+
+    setClasses() {
+        let classes = this.getAttribute('classname')
+        if(classes) {
+            this.className = this.getAttribute('classname')
+        }
     }
 
     init[CAMEL] () {  
         // console.log("Init: [CAMEL] ")
-        const { options } = this.props
+        // const { options } = this.props
         // this.initVue()
     }
 

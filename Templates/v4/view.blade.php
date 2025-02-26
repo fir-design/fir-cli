@@ -23,14 +23,14 @@
     @else
         <!-- Start [NAME] -->
         <section fir-container="[SLUGIFY]" id="{{ $block->block->anchor ?? Fir\Lib\Utils\Blocks::getUniqueId() }}" class="@container/[SLUGIFY]">
-            <fir-[SLUGIFY] class="block {{ $backgroundColor }} transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
+            <fir-[SLUGIFY] class="block transition duration-500" is="fir-[SLUGIFY]" data-title="{{ $pinecone_title ?? '' }}" data-pinecone data-animation-props="{{ Fir\Lib\Utils\Animations::animationsComponentVariables($options['animations']) }}"
                 {!! $options['animations']['animationsComponent'] !!}>
-                <div class="{{ $padding }} {{ $margin }} {{ $textColor }}">
+               
                     <small>Pinecone: [NAME] / [CAMEL]</small>
                     <div data-vue>
                     </div>
-                    <InnerBlocks />
-                </div>
+                    <InnerBlocks  allowedBlocks="{!! $allowed !!}"/>
+
             </fir-[SLUGIFY]>
         </section>
     @endif

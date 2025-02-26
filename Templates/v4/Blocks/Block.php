@@ -121,6 +121,14 @@ class [CAMEL] extends Block
     public $apiVersion = 3;
 
     /**
+     * The Allowed Blocks
+     *
+     * @var array
+     */
+    public $allowed = [];
+
+
+    /**
      * The supported block features.
      *
      * @var array
